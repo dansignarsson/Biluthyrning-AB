@@ -1,0 +1,25 @@
+﻿@model CustomerVM[]
+@{
+    ViewData["Title"] = "Kunder";
+}
+
+    <div id="kundsidan">
+        <div id="kunder">
+            <h1>Kunder</h1>
+        <a href="/CreateNewCustomer">Skapa ny kund</a>
+       
+
+            <h2>Befintliga kunder</h2>
+            @foreach (var c in @Model)
+            {
+                <a asp-controller="Main" asp-action="CustomerDetails" asp-route-id="@c.CustomerId">@c.CustomerId @c.Ssn @c.LastName @c.FirstName</a> <br/>
+            }
+        </div>
+
+
+
+
+        <div id="hemknapp">
+            <a href="/">Home</a>
+        </div>
+    </div>

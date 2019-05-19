@@ -1,0 +1,25 @@
+﻿@model CustomerDetailsVM
+@{
+    ViewData["Title"] = "Kunddetaljer";
+}
+
+<h1>Kunddetaljer</h1>
+
+@Model.CustomerId
+@Model.Ssn
+@Model.FirstName
+@Model.LastName
+
+
+<h2>Pågående Bokningar</h2>
+
+@foreach (var o in @Model.Orders)
+{
+    <p>@o.RegNr</p>
+    <br />
+    <p>@o.CarType</p>
+    <br />
+    <p>@o.PickUpDate</p>
+}
+<br/>
+<a href="~/CustomersPage/">Tillbaka tll kunder</a>

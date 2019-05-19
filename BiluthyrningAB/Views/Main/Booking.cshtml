@@ -1,0 +1,56 @@
+﻿@model OrderVM
+@{ 
+    ViewData["Title"] = "Booking";
+}
+
+    <h1>Fyll i bokningsinformationen</h1>
+
+    <form asp-controller="Main" asp-action="Booking" method="post">
+
+
+
+        <label asp-for="CustomerId">Välj kund:</label>
+        <select asp-for="CustomerId" class="form-control">
+
+            @foreach (var c in @Model.Customers)
+            {
+                <option value="@c.CustomerId">@c.CustomerId @c.LastName @c.FirstName </option>
+            }
+
+        </select>
+        <a href="/CreateNewCustomer" type="button">Lägg till ny kund</a>
+        <br/>
+
+
+        <label asp-for="CarType">Biltyp</label>
+        <select asp-for="CarType" class="form-control">
+            <option value="Small car">Small car</option>
+            <option value="Van">Van</option>
+            <option value="Minibuss">Minibuss</option>
+        </select>
+
+
+        <label asp-for="RegNr">Registreringsnummer</label>
+        <input asp-for="RegNr" class="form-control" />
+        <span asp-validation-for="RegNr" class="text-danger"></span>
+
+        <label asp-for="PickUpDate">Datum och tid för upphämtning</label>
+        <input asp-for="PickUpDate" type="datetime-local" asp-format="{0:dd/MM/yyyy 00:00}" class="form-control" />
+
+        <label asp-for="CurrentMileage">Nuvarande mätarställning</label>
+        <input asp-for="CurrentMileage" class="form-control" />
+
+        <input asp-for="IsReturned" type="hidden" value="false" class="form-control" />
+
+        <br />
+
+
+        <button type="submit">Boka</button>
+
+    </form>
+
+        
+
+
+    <a href="/">Home</a>
+

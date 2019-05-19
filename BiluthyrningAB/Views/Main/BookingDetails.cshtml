@@ -1,0 +1,32 @@
+﻿@model OrderVM
+@{
+    ViewData["Title"] = "Bokningsdetaljer";
+}
+
+<p>Bokningsnummer: @Model.BookingNr</p>
+<p>Registreringsnummer: @Model.RegNr</p>
+<p>Bilmodell: @Model.CarType</p>
+<p>Datum för upphämtning: @Model.PickUpDate</p>
+<p>Mätarställning vid uthyrning: @Model.CurrentMileage</p>
+
+
+
+<form asp-controller="Main" asp-action="ConfirmReturn" method="post">
+
+    <label asp-for="MileageOnReturn">Mätarställning vid återlämning</label>
+    <input asp-for="MileageOnReturn" class="form-control" />
+    <span asp-validation-for="MileageOnReturn" class="text-danger"></span>
+
+    <input asp-for="BookingNr" type="hidden" value="@Model.BookingNr" class="form-control" />
+    <input asp-for="IsReturned" type="hidden" value="true" class="form-control" />
+
+
+
+    <button type="submit">Bekräfta återlämning</button>
+</form>
+
+<a href="/Return">Tillbaka till bokningar</a>
+
+
+
+

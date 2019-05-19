@@ -1,0 +1,35 @@
+﻿@model CustomerVM
+@{
+    ViewData["Title"] = "Lägg till ny kund";
+}
+
+<div id="kundsidan">
+    <div id="kundform">
+
+        <h1>Lägg till ny kund</h1>
+
+        <form asp-controller="Main" asp-action="CreateNewCustomer" method="post">
+
+            <label asp-for="@Model.">Personnummer</label>
+            <input asp-for="Ssn" class="form-control" />
+            <span asp-validation-for="Ssn" class="text-danger"></span>
+
+            <label asp-for="FirstName">Förnamn</label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+
+            <label asp-for="LastName">Förnamn</label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+            <br/>
+            <button type="submit">Skapa ny kund</button>
+
+        </form>
+
+
+        <div id="hemknapp">
+            <a href="/">Home</a>
+        </div>
+
+    </div>
+    </div>
