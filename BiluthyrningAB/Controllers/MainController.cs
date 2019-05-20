@@ -27,7 +27,7 @@ namespace BiluthyrningAB.Controllers
         [Route("/Booking/")]
         public IActionResult Booking()
         {
-            return View(service.ListCustomersForBooking());
+            return View(service.ListAvailableCarsForBooking());
         }
 
         [HttpPost]
@@ -102,12 +102,31 @@ namespace BiluthyrningAB.Controllers
         {
             return View(service.GetCustomerDetailsAndOrders(id));
         }
-        //[HttpGet]
-        //[Route("/CustomerDetails/")]
-        //public IActionResult CustomerOrders(int id)
-        //{
-        //    return View(service.GetCustomerOrders(id));
-        //}
+
+        [HttpGet]
+        [Route("/CarsIndex/")]
+        public IActionResult CarsIndex()
+        {
+            return View(service.GetAllCarsFromDB());
+        }
+
+        [HttpGet]
+        [Route("/AddCar/")]
+        public IActionResult AddCar()
+        {
+                return View();
+        }
+
+        [HttpPost]
+        [Route("/AddCar/")]
+        public IActionResult AddCar(CarVM carToAdd)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            service.AddCarToDb(carToAdd);
+            return RedirectToAction(nameof(AddCar));
+        }
 
     }
 }

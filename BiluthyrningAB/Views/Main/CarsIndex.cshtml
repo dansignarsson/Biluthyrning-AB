@@ -1,0 +1,18 @@
+﻿@model CarVM[]
+@{
+    ViewData["Title"] = "Bilar";
+}
+
+<h1>Bilar</h1>
+<a href="~/AddCar/">Lägg till ny bil</a>
+<<br />
+
+@foreach (var c in Model)
+{
+    @c.RegNr @c.CarType @c.Mileage <br />
+}
+<br />
+
+
+
+<a href="/">Bakåt</a>

@@ -5,17 +5,18 @@
 
 <h1>Kvitto</h1>
 
-<p>Bokningsnummer @Model.BookingNr</p>
-<br/>
-<br/>
-<p>Registreringsnummer @Model.RegNr Biltyp @Model.CarType        </p>
-<p>Upphämtningsdatum @Model.PickUpDate    Återlämningsdatum @Model.ReturnDate</p>
-<p>Mätarställning vid upphämtning @Model.MileageOnPickup Km    Mätarställning vid återlämnande @Model.MileageOnReturn Km</p>
-<p>Körsträcka @Model.DrivenMiles Km      Uthyrd i @Model.DaysRented Dagar</p>
-<br/>
+<p>Bokningsnummer: @Model.BookingNr</p> <p>Kundnummer: @Model.CustomerId</p> 
+<br />
+<p>Namn: @Model.FirstName @Model.LastName Personnummer: @Model.Ssn</p>
+<br />
+<p>Registreringsnummer: @Model.RegNr Biltyp: @Model.CarType</p>
+<p>Upphämtningsdatum: @Model.PickUpDate    Återlämningsdatum: @Model.ReturnDate</p>
+<p>Mätarställning vid upphämtning: @Model.MileageOnPickup Km    Mätarställning vid återlämnande: @Model.MileageOnReturn Km</p>
+<p>Körsträcka: @Model.DrivenMiles Km      Uthyrd i: @Model.DaysRented Dagar</p>
+<br />
 <p>Totalt pris Baspris per dag 400kr * @Model.DaysRented dagar   =    @Model.TotalPrice Kr</p>
 
 
 <button>Skriv ut kvitto</button>
-<br/>
+<br />
 <a href="/">Home</a>

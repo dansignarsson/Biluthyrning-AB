@@ -1,0 +1,36 @@
+﻿
+@model CarVM
+@{
+    ViewData["Title"] = "Lägg till ny bil";
+}
+
+<h1>Lägg till ny Bil</h1>
+
+<form asp-controller="Main" asp-action="AddCar" method="post">
+
+    <label asp-for="RegNr">Registreringsnummer</label>
+    <input asp-for="RegNr" class="form-control" />
+    <span asp-validation-for="RegNr" class="text-danger"></span>
+
+    <label asp-for="CarType">Välj bil</label>
+    <select asp-for="CarType" class="form-control">
+        <option value="Small car">Small car</option>
+        <option value="Van">Van</option>
+        <option value="Minibuss">Minibuss</option>
+    </select>
+
+
+    <label asp-for="Mileage">Mätarställning</label>
+    <input asp-for="Mileage" class="form-control" />
+    <span asp-validation-for="Mileage" class="text-danger"></span>
+
+    <input asp-for="IsAvailable" type="hidden" value="true" class="form-control" />
+    <br />
+    <button type="submit">Lägg till bil</button>
+
+</form>
+
+
+<div id="hemknapp">
+    <a href="/">Home</a>
+</div>

@@ -17,5 +17,10 @@ namespace BiluthyrningAB.Models.ViewModels
         public int MileageOnReturn { get; set; }
         public int DrivenMiles { get; set; }
         public double TotalPrice { get; set; }
+
+        public int CustomerId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Ssn { get; set; }
     }
 }

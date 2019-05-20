@@ -9,36 +9,29 @@
 
 
 
-        <label asp-for="CustomerId">Välj kund:</label>
-        <select asp-for="CustomerId" class="form-control">
+        <label asp-for="Ssn">Personnummer</label>
+        <input asp-for="Ssn" class="form-control">
+        <span asp-validation-for="Ssn" class="text-danger"></span>
 
-            @foreach (var c in @Model.Customers)
-            {
-                <option value="@c.CustomerId">@c.CustomerId @c.LastName @c.FirstName </option>
-            }
 
-        </select>
         <a href="/CreateNewCustomer" type="button">Lägg till ny kund</a>
-        <br/>
+        <br />
 
-
-        <label asp-for="CarType">Biltyp</label>
-        <select asp-for="CarType" class="form-control">
-            <option value="Small car">Small car</option>
-            <option value="Van">Van</option>
-            <option value="Minibuss">Minibuss</option>
-        </select>
-
-
-        <label asp-for="RegNr">Registreringsnummer</label>
-        <input asp-for="RegNr" class="form-control" />
-        <span asp-validation-for="RegNr" class="text-danger"></span>
 
         <label asp-for="PickUpDate">Datum och tid för upphämtning</label>
         <input asp-for="PickUpDate" type="datetime-local" asp-format="{0:dd/MM/yyyy 00:00}" class="form-control" />
 
-        <label asp-for="CurrentMileage">Nuvarande mätarställning</label>
-        <input asp-for="CurrentMileage" class="form-control" />
+
+        <label asp-for="CarId">Välj bil</label>
+        <select asp-for="CarId" class="form-control">
+
+            @foreach (var c in @Model.Cars)
+            {
+                <option value="@c.Id">@c.CarType @c.RegNr</option>
+            }
+
+        </select>
+
 
         <input asp-for="IsReturned" type="hidden" value="false" class="form-control" />
 

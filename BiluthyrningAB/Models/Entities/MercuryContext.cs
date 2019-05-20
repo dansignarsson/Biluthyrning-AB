@@ -15,6 +15,7 @@ namespace BiluthyrningAB.Models.Entities
         {
         }
 
+        public virtual DbSet<Cars> Cars { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
 
@@ -29,6 +30,13 @@ namespace BiluthyrningAB.Models.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Cars>(entity =>
+            {
+                entity.Property(e => e.CarType).HasMaxLength(32);
+
+                entity.Property(e => e.RegNr).HasMaxLength(6);
+            });
+
             modelBuilder.Entity<Customers>(entity =>
             {
                 entity.HasKey(e => e.CustomerId);
@@ -57,18 +65,19 @@ namespace BiluthyrningAB.Models.Entities
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.CarType).HasMaxLength(32);
-
                 entity.Property(e => e.PickUpDate).HasColumnType("datetime");
 
-                entity.Property(e => e.RegNr).HasMaxLength(6);
-
                 entity.Property(e => e.ReturnDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Car)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.CarId)
+                    .HasConstraintName("FK__Orders__CarId__2645B050");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__Orders__Customer__1DB06A4F");
+                    .HasConstraintName("FK__Orders__Customer__25518C17");
             });
         }
     }
