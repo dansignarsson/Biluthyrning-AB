@@ -136,14 +136,43 @@ namespace BiluthyrningAB.Controllers
         }
 
         [HttpPost]
-        [Route("/UpdateCarServices/")]
-        public IActionResult UpdateCarServices(CarVM carToUpdate)
+        [Route("/UpdateCarService/")]
+        public IActionResult UpdateCarService(CarVM carToUpdate)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            service.UpdateCarServices(carToUpdate);
-            return RedirectToAction(nameof(CarsIndex));
+            service.UpdateCarService(carToUpdate);
+            return RedirectToAction("CarDetails", new { id = carToUpdate.Id });
+        }
+
+        [HttpPost]
+        [Route("/UpdateCarCleaning/")]
+        public IActionResult UpdateCarCleaning(CarVM carToUpdate)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            service.UpdateCarCleaning(carToUpdate);
+            return RedirectToAction("CarDetails", new { id = carToUpdate.Id });
+        }
+
+        [HttpPost]
+        [Route("/RemoveCarFromDb/")]
+        public IActionResult RemoveCarFromDb(int id)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            service.RemoveCarfromDb(id);
+            return RedirectToAction("CarsIndex");
+        }
+
+        [HttpGet]
+        [Route("/History/")]
+        public IActionResult History()
+        {
+            return View(service.GetAllHistory());
         }
 
 

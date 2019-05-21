@@ -1,0 +1,12 @@
+﻿@model HistoryLogVM[]
+
+@{
+    ViewData["Title"] = "BiluthyrningAB Historik";
+}
+
+<h1>Historik</h1>
+
+@foreach(var log in Model)
+{
+    <p>@log.Activity</p>
+}

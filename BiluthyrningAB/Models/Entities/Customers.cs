@@ -7,6 +7,7 @@ namespace BiluthyrningAB.Models.Entities
     {
         public Customers()
         {
+            HistoryLog = new HashSet<HistoryLog>();
             Orders = new HashSet<Orders>();
         }
 
@@ -15,6 +16,7 @@ namespace BiluthyrningAB.Models.Entities
         public string LastName { get; set; }
         public string Ssn { get; set; }
 
+        public ICollection<HistoryLog> HistoryLog { get; set; }
         public ICollection<Orders> Orders { get; set; }
     }
 }

@@ -38,8 +38,16 @@ namespace BiluthyrningAB.Models
             carToBook.IsAvailable = false;
             carToBook.TimesRented += 1;
 
-
             context.Orders.Add(x);
+
+            HistoryLog y = new HistoryLog
+            {
+                CustomerId = x.CustomerId,
+                CarId = newOrder.CarId,
+                Activity = $"Kund {x.CustomerId} hyrde bil {newOrder.CarId}"
+            };
+
+            context.HistoryLog.Add(y);
             context.SaveChanges();
         }
 
@@ -71,7 +79,7 @@ namespace BiluthyrningAB.Models
                 {
                     BookingNr = d.BookingNr,
                     CustomerId = d.CustomerId,
-                    CarId = d.CarId,
+                    CarId = (int)d.CarId,
                     IsReturned = (bool)d.IsReturned,
                     RegNr = context.Cars
                     .Where(c => c.Id == d.CarId)
@@ -94,7 +102,7 @@ namespace BiluthyrningAB.Models
                .Select(b => new OrderVM
                {
                    BookingNr = b.BookingNr,
-                   CarId = b.CarId,
+                   CarId = (int)b.CarId,
                    PickUpDate = (DateTime)b.PickUpDate,
                    ReturnDate = b.ReturnDate,
                    CurrentMileage = b.CurrentMileage
@@ -125,8 +133,18 @@ namespace BiluthyrningAB.Models
             if (car.Mileage >= 2000)
                 car.ToBeRemoved = true;
 
+            HistoryLog y = new HistoryLog
+            {
+                OrderId = carToReturn.BookingNr,
+                CustomerId = orderReturned.CustomerId,
+                CarId = car.Id,
+                Activity = $"Kund {orderReturned.CustomerId} Lämnade tillbaka bil {car.Id}"
+            };
+
+            context.HistoryLog.Add(y);
             context.SaveChanges();
         }
+
 
         public RecieptVM CreateReciept(int id)
         {
@@ -170,6 +188,7 @@ namespace BiluthyrningAB.Models
 
             return reciept;
         }
+
 
         internal void CreateCustomer(CustomerVM newCustomer)
         {
@@ -240,6 +259,14 @@ namespace BiluthyrningAB.Models
                 })
                 .ToArray();
 
+            var cHistory = context.HistoryLog
+                .Where(h => h.CustomerId == id)
+                .Select(h => new HistoryLogVM
+                {
+                    CustomerId = h.CustomerId,
+                    Activity = h.Activity
+                }).ToArray();
+
             CustomerDetailsVM details = new CustomerDetailsVM();
 
             details.CustomerId = cDetails.CustomerId;
@@ -247,10 +274,9 @@ namespace BiluthyrningAB.Models
             details.FirstName = cDetails.FirstName;
             details.LastName = cDetails.LastName;
             details.Orders = cOrders;
+            details.History = cHistory;
 
             return details;
-
-
         }
 
         internal void AddCarToDb(CarVM carToAdd)
@@ -269,6 +295,7 @@ namespace BiluthyrningAB.Models
             context.Cars.Add(c);
             context.SaveChanges();
         }
+
         internal CarVM[] GetAllCarsFromDB()
         {
             return context.Cars
@@ -301,18 +328,82 @@ namespace BiluthyrningAB.Models
                     ToBeCleaned = c.ToBeCleaned,
                     NeedService = c.NeedService,
                     ToBeRemoved = c.ToBeRemoved,
+                    History = context.HistoryLog
+                    .Where(h => h.CarId == id)
+                    .Select(h => new HistoryLogVM
+                    {
+                        CarId = h.CarId,
+                        Activity = h.Activity,
+                    }).ToArray()
                 })
                 .First();
         }
 
-        internal void UpdateCarServices(CarVM update)
+        internal void UpdateCarService(CarVM update)
         {
             var carToUpdate = context.Cars.First(c => c.Id == update.Id);
-
-            carToUpdate.ToBeCleaned = update.ToBeCleaned;
             carToUpdate.NeedService = update.NeedService;
 
+            HistoryLog y = new HistoryLog
+            {
+                CarId = carToUpdate.Id,
+                Activity = $"Bil {carToUpdate.Id} Lämnades in på service."
+            };
+
+            context.HistoryLog.Add(y);
             context.SaveChanges();
+        }
+
+        internal void UpdateCarCleaning(CarVM update)
+        {
+            var carToUpdate = context.Cars.First(c => c.Id == update.Id);
+            carToUpdate.ToBeCleaned = update.ToBeCleaned;
+
+            HistoryLog y = new HistoryLog
+            {
+                CarId = carToUpdate.Id,
+                Activity = $"Bil {carToUpdate.Id} städades."
+            };
+
+            context.HistoryLog.Add(y);
+            context.SaveChanges();
+        }
+
+        internal void RemoveCarfromDb(int deleteId)
+        {
+            var updateHistory = context.HistoryLog
+                .Where(h => h.CarId == deleteId)
+                .ToArray();
+
+            var updateOrders = context.Orders
+                .Where(o => o.CarId == deleteId)
+                .ToArray();
+
+            foreach (var order in updateOrders)
+            {
+                order.CarId = null;
+                context.SaveChanges();
+            }
+
+            foreach (var log in updateHistory)
+            {
+                log.CarId = null;
+            }
+
+            var carToDelete = context.Cars
+                .First(c => c.Id == deleteId);
+
+            context.Cars.Remove(carToDelete);
+            context.SaveChanges();
+                
+        }
+        internal HistoryLogVM[] GetAllHistory()
+        {
+            return context.HistoryLog
+                .Select(h => new HistoryLogVM
+                {
+                    Activity = h.Activity,
+                }).ToArray();
         }
 
     }

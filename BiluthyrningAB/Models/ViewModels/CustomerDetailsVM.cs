@@ -14,5 +14,6 @@ namespace BiluthyrningAB.Models.ViewModels
       
 
         public OrderVM[] Orders { get; set; }
+        public HistoryLogVM[] History { get; set; }
     }
 }

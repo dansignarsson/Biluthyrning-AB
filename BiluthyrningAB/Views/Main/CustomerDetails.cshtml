@@ -22,4 +22,10 @@
     <p>@o.PickUpDate</p>
 }
 <br/>
+<h2>Historik</h2>
+
+@foreach(var log in Model.History)
+{
+    <p>@log.Activity</p>
+}
 <a href="~/CustomersPage/">Tillbaka tll kunder</a>

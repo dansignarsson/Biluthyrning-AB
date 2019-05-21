@@ -17,13 +17,13 @@ namespace BiluthyrningAB.Models.Entities
 
         public virtual DbSet<Cars> Cars { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
+        public virtual DbSet<HistoryLog> HistoryLog { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Mercury;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             }
         }
@@ -55,6 +55,24 @@ namespace BiluthyrningAB.Models.Entities
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<HistoryLog>(entity =>
+            {
+                entity.HasOne(d => d.Car)
+                    .WithMany(p => p.HistoryLog)
+                    .HasForeignKey(d => d.CarId)
+                    .HasConstraintName("FK__HistoryLo__CarId__40058253");
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.HistoryLog)
+                    .HasForeignKey(d => d.CustomerId)
+                    .HasConstraintName("FK__HistoryLo__Custo__3F115E1A");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.HistoryLog)
+                    .HasForeignKey(d => d.OrderId)
+                    .HasConstraintName("FK__HistoryLo__Order__3E1D39E1");
+            });
+
             modelBuilder.Entity<Orders>(entity =>
             {
                 entity.HasKey(e => e.BookingNr);
@@ -72,12 +90,12 @@ namespace BiluthyrningAB.Models.Entities
                 entity.HasOne(d => d.Car)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CarId)
-                    .HasConstraintName("FK__Orders__CarId__31B762FC");
+                    .HasConstraintName("FK__Orders__CarId__3A4CA8FD");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__Orders__Customer__30C33EC3");
+                    .HasConstraintName("FK__Orders__Customer__395884C4");
             });
         }
     }
