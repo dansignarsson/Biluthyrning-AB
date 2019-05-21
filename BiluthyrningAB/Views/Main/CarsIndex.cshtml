@@ -8,11 +8,22 @@
 <<br />
 
 @foreach (var c in Model)
-{
-    @c.RegNr @c.CarType @c.Mileage <br />
-}
-<br />
+{   
+<span>
+    <a asp-controller="Main" asp-action="CarDetails" asp-route-id="@c.Id">@c.RegNr @c.CarType @c.Mileage</a>
+        @if (@c.ToBeCleaned)
+        {<span style="color:darkgreen">Städas!</span>}
+        @if (@c.NeedService)
+        {<span style="color:blue">Service!</span>}
+        @if (@c.ToBeRemoved)
+        {<span style="color:red">Plockas bort!</span>}
+
+</span>
+
+        <br />
+    }
+    <br />
 
 
 
-<a href="/">Bakåt</a>
+    <a href="/">Bakåt</a>

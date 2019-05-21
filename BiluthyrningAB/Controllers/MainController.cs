@@ -128,5 +128,24 @@ namespace BiluthyrningAB.Controllers
             return RedirectToAction(nameof(AddCar));
         }
 
+        [HttpGet]
+        [Route("/CarDetails/{id}")]
+        public IActionResult CarDetails(int id)
+        {
+            return View(service.GetCarDetails(id));
+        }
+
+        [HttpPost]
+        [Route("/UpdateCarServices/")]
+        public IActionResult UpdateCarServices(CarVM carToUpdate)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            service.UpdateCarServices(carToUpdate);
+            return RedirectToAction(nameof(CarsIndex));
+        }
+
+
     }
 }

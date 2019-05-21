@@ -25,7 +25,7 @@ namespace BiluthyrningAB.Models
             Orders x = new Orders
             {
                 CustomerId = context.Customers
-                .Where(c =>c.Ssn == newOrder.Ssn)
+                .Where(c => c.Ssn == newOrder.Ssn)
                 .Select(c => c.CustomerId)
                 .FirstOrDefault(),
                 CarId = newOrder.CarId,
@@ -36,6 +36,8 @@ namespace BiluthyrningAB.Models
             };
 
             carToBook.IsAvailable = false;
+            carToBook.TimesRented += 1;
+
 
             context.Orders.Add(x);
             context.SaveChanges();
@@ -102,7 +104,7 @@ namespace BiluthyrningAB.Models
             return orderDetails;
         }
 
-        internal void CarToReturn(OrderVM carToReturn) 
+        internal void CarToReturn(OrderVM carToReturn)
         {
             var orderReturned = context.Orders.First(x => x.BookingNr == carToReturn.BookingNr);
             var car = context.Cars.First(c => c.Id == orderReturned.CarId);
@@ -112,12 +114,19 @@ namespace BiluthyrningAB.Models
             orderReturned.DrivenMiles = carToReturn.MileageOnReturn - orderReturned.CurrentMileage;
             orderReturned.IsReturned = true;
 
+            car.ToBeCleaned = true;
             car.IsAvailable = true;
             car.Mileage += orderReturned.DrivenMiles;
+            if (car.TimesRented == 3)
+            {
+                car.NeedService = true;
+                car.TimesRented = 0;
+            }
+            if (car.Mileage >= 2000)
+                car.ToBeRemoved = true;
 
             context.SaveChanges();
         }
-
 
         public RecieptVM CreateReciept(int id)
         {
@@ -251,7 +260,11 @@ namespace BiluthyrningAB.Models
             c.RegNr = carToAdd.RegNr;
             c.CarType = carToAdd.CarType;
             c.Mileage = carToAdd.Mileage;
-            c.IsAvailable = carToAdd.IsAvailable;
+            c.IsAvailable = true;
+            c.TimesRented = 0;
+            c.ToBeCleaned = false;
+            c.ToBeRemoved = false;
+            c.NeedService = false;
 
             context.Cars.Add(c);
             context.SaveChanges();
@@ -262,14 +275,45 @@ namespace BiluthyrningAB.Models
                 .OrderBy(c => c.RegNr)
                 .Select(c => new CarVM
                 {
+                    Id = c.Id,
                     RegNr = c.RegNr,
                     CarType = c.CarType,
                     Mileage = c.Mileage,
-                    IsAvailable = c.IsAvailable
+                    IsAvailable = c.IsAvailable,
+                    ToBeCleaned = c.ToBeCleaned,
+                    NeedService = c.NeedService,
+                    ToBeRemoved = c.ToBeRemoved,
                 })
                 .ToArray();
         }
 
+        internal CarVM GetCarDetails(int id)
+        {
+            return context.Cars
+                .Where(c => c.Id == id)
+                .Select(c => new CarVM
+                {
+                    Id = c.Id,
+                    RegNr = c.RegNr,
+                    CarType = c.CarType,
+                    Mileage = c.Mileage,
+                    IsAvailable = c.IsAvailable,
+                    ToBeCleaned = c.ToBeCleaned,
+                    NeedService = c.NeedService,
+                    ToBeRemoved = c.ToBeRemoved,
+                })
+                .First();
+        }
+
+        internal void UpdateCarServices(CarVM update)
+        {
+            var carToUpdate = context.Cars.First(c => c.Id == update.Id);
+
+            carToUpdate.ToBeCleaned = update.ToBeCleaned;
+            carToUpdate.NeedService = update.NeedService;
+
+            context.SaveChanges();
+        }
 
     }
 }

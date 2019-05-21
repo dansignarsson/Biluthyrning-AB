@@ -14,7 +14,11 @@ namespace BiluthyrningAB.Models.Entities
         public string CarType { get; set; }
         public string RegNr { get; set; }
         public int Mileage { get; set; }
+        public int TimesRented { get; set; }
         public bool? IsAvailable { get; set; }
+        public bool ToBeCleaned { get; set; }
+        public bool ToBeRemoved { get; set; }
+        public bool NeedService { get; set; }
 
         public ICollection<Orders> Orders { get; set; }
     }

@@ -15,5 +15,9 @@ namespace BiluthyrningAB.Models.ViewModels
         public string CarType { get; set; }
         public int Mileage { get; set; }
         public bool? IsAvailable { get; set; }
+        public int TimesRented { get; set; }
+        public bool ToBeCleaned { get; set; }
+        public bool ToBeRemoved { get; set; }
+        public bool NeedService { get; set; }
     }
 }

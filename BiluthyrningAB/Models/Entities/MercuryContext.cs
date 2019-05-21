@@ -72,12 +72,12 @@ namespace BiluthyrningAB.Models.Entities
                 entity.HasOne(d => d.Car)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CarId)
-                    .HasConstraintName("FK__Orders__CarId__2645B050");
+                    .HasConstraintName("FK__Orders__CarId__31B762FC");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__Orders__Customer__25518C17");
+                    .HasConstraintName("FK__Orders__Customer__30C33EC3");
             });
         }
     }
