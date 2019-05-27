@@ -7,20 +7,15 @@
 
     <form asp-controller="Main" asp-action="Booking" method="post">
 
-
-
         <label asp-for="Ssn">Personnummer</label>
         <input asp-for="Ssn" class="form-control">
         <span asp-validation-for="Ssn" class="text-danger"></span>
 
-
         <a href="/CreateNewCustomer" type="button">Lägg till ny kund</a>
         <br />
 
-
         <label asp-for="PickUpDate">Datum och tid för upphämtning</label>
         <input asp-for="PickUpDate" type="datetime-local" asp-format="{0:dd/MM/yyyy 00:00}" class="form-control" />
-
 
         <label asp-for="CarId">Välj bil</label>
         <select asp-for="CarId" class="form-control">
@@ -32,18 +27,11 @@
 
         </select>
 
-
         <input asp-for="IsReturned" type="hidden" value="false" class="form-control" />
-
         <br />
-
-
         <button type="submit">Boka</button>
 
     </form>
-
-        
-
 
     <a href="/">Home</a>
 

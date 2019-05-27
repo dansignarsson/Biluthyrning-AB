@@ -8,7 +8,7 @@
 
         <h1>Lägg till ny kund</h1>
 
-        <form asp-controller="Main" asp-action="CreateNewCustomer" method="post">
+        <form asp-controller="Customers" asp-action="CreateNewCustomer" method="post">
 
             <label asp-for="@Model.">Personnummer</label>
             <input asp-for="Ssn" class="form-control" />
@@ -25,7 +25,6 @@
             <button type="submit">Skapa ny kund</button>
 
         </form>
-
 
         <div id="hemknapp">
             <a href="/">Home</a>

@@ -10,7 +10,7 @@
 @foreach (var c in Model)
 {   
 <span>
-    <a asp-controller="Main" asp-action="CarDetails" asp-route-id="@c.Id">@c.RegNr @c.CarType @c.Mileage</a>
+    <a asp-controller="Cars" asp-action="CarDetails" asp-route-id="@c.Id">@c.RegNr @c.CarType @c.Mileage</a>
         @if (@c.ToBeCleaned)
         {<span style="color:darkgreen">Städas!</span>}
         @if (@c.NeedService)

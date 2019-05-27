@@ -3,14 +3,12 @@
     ViewData["Title"] = "Return Cars";
 }
 
-
     <h1>Välj bil att lämna tillbaka</h1>
 
     @foreach (var item in @Model)
     {
         <a asp-controller="Main" asp-action="BookingDetails" asp-route-id="@item.BookingNr">@item.RegNr @item.CarType </a><br />
     }
-
 
     <a href="/">Home</a>
 

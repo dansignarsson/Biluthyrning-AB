@@ -6,7 +6,7 @@
 
 <h1>Lägg till ny Bil</h1>
 
-<form asp-controller="Main" asp-action="AddCar" method="post">
+<form asp-controller="Cars" asp-action="AddCar" method="post">
 
     <label asp-for="RegNr">Registreringsnummer</label>
     <input asp-for="RegNr" class="form-control" />
@@ -19,7 +19,6 @@
         <option value="Minibuss">Minibuss</option>
     </select>
 
-
     <label asp-for="Mileage">Mätarställning</label>
     <input asp-for="Mileage" class="form-control" />
     <span asp-validation-for="Mileage" class="text-danger"></span>
@@ -28,7 +27,6 @@
     <button type="submit">Lägg till bil</button>
 
 </form>
-
 
 <div id="hemknapp">
     <a href="/">Home</a>

@@ -9,8 +9,6 @@
 <p>Datum för upphämtning: @Model.PickUpDate</p>
 <p>Mätarställning vid uthyrning: @Model.CurrentMileage</p>
 
-
-
 <form asp-controller="Main" asp-action="ConfirmReturn" method="post">
 
     <label asp-for="MileageOnReturn">Mätarställning vid återlämning</label>
@@ -19,8 +17,6 @@
 
     <input asp-for="BookingNr" type="hidden" value="@Model.BookingNr" class="form-control" />
     <input asp-for="IsReturned" type="hidden" value="true" class="form-control" />
-
-
 
     <button type="submit">Bekräfta återlämning</button>
 </form>

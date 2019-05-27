@@ -2,18 +2,16 @@
 @{
     ViewData["Title"] = "Bildetaljer";
 }
-
-
+<h1>Bildetaljer @Model.RegNr</h1><br/>
 <p>Bil ID: @Model.Id</p>
 <p>Registreringsnummer: @Model.RegNr</p>
 <p>Bilmodell: @Model.CarType</p>
 <p>Mätarställning: @Model.Mileage</p>
 
 
-
 @if (@Model.ToBeCleaned)
 {
-    <form asp-controller="Main" asp-action="UpdateCarCleaning" method="post">
+    <form asp-controller="Cars" asp-action="UpdateCarCleaning" method="post">
         <span style="color:green">Städas!</span>
         <input asp-for="ToBeCleaned" type="hidden" value="false" class="form-control" />
         <input asp-for="Id" type="hidden" value="@Model.Id" class="form-control" />
@@ -22,10 +20,9 @@
     </form>
 }
 
-
 @if (@Model.NeedService)
 {
-    <form asp-controller="Main" asp-action="UpdateCarService" method="post">
+    <form asp-controller="Cars" asp-action="UpdateCarService" method="post">
         <span style="color:blue">Service!</span>
         <input asp-for="NeedService" type="hidden" value="false" class="form-control" />
         <input asp-for="Id" type="hidden" value="@Model.Id" class="form-control" />
@@ -36,7 +33,7 @@
 
 @if (Model.ToBeRemoved)
 {
-    <form asp-controller="Main" asp-action="RemoveCarFromDb" method="post">
+    <form asp-controller="Cars" asp-action="RemoveCarFromDb" method="post">
         <span style="color:red">Ska tas bort!</span>
         <input asp-for="Id" type="hidden" value="@Model.Id" class="form-control" />
         <button type="submit">Ta bort bil ur systemet</button>

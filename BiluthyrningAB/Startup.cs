@@ -22,7 +22,10 @@ namespace BiluthyrningAB
 
             services.AddDbContext<MercuryContext>(o => o.UseSqlServer(connString));
 
+            services.AddTransient<CarsService>();
             services.AddTransient<MainService>();
+            services.AddTransient<CustomersService>();
+
             services.AddMvc();
         }
 
