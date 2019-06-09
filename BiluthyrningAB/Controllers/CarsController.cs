@@ -85,22 +85,22 @@ namespace BiluthyrningAB.Controllers
 
         //[HttpPost]
         //[Route("~/AvailableCars")]
-        //public IActionResult AvailableCars([FromBody]RentPeriodData viewModel)
+        //public IActionResult AvailableCars([FromBody]Data viewModel)
         //{
-        //    CarsListOfAllVM[] x = service.CheckCarsAvailabilityDuringPeriod(viewModel);
+        //    CarsListOfAllVM[] x = service.CheckCarsAvailability(model);
         //    //return RedirectToAction(nameof(AvailableCars));
         //    //return RedirectToAction("AvailableCars", "Cars", x);
-        //    //return RedirectToAction(nameof(AvailableCars), new { CarsListOfAllVM = x});
+        //    //return RedirectToAction(nameof(AvailableCars), new { CarsListAllVM = x});
         //    return AvailableCars(x);
 
 
         //}
         //[HttpGet]
         //[Route("~/AvailableCars")]
-        //public IActionResult AvailableCars(CarsListOfAllVM[] x)
+        //public IActionResult AvailableCars(CarsListAllVM[] x)
         //{
 
-        //    //CarsListOfAllVM[] x = service.CheckCarsAvailabilityDuringPeriod(viewModel);
+        //    //CarsListAllVM[] x = service.CheckCarsAvailability(model);
         //    return PartialView("_AvailableCars", x);
 
         //}
