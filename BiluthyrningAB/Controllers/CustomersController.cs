@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BiluthyrningAB.Models;
+using BiluthyrningAB.Models.Entities;
 using BiluthyrningAB.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,8 @@ namespace BiluthyrningAB.Controllers
     public class CustomersController : Controller
     {
         CustomersService service;
+
+        MercuryContext db = new MercuryContext();
 
         public CustomersController(CustomersService service)
         {
@@ -48,6 +51,17 @@ namespace BiluthyrningAB.Controllers
         public IActionResult CustomerDetails(int id)
         {
             return View(service.GetCustomerDetailsAndOrders(id));
+        }
+
+        [HttpPost]
+        public JsonResult IsRegistered(string userData)
+        {
+            var dbSsn = db.Customers.Where(c => c.Ssn == userData).SingleOrDefault();
+
+            if (dbSsn != null)
+                return Json(1);
+            else
+                return Json(0);
         }
     }
 }

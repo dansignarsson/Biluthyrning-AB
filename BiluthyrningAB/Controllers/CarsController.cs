@@ -82,5 +82,27 @@ namespace BiluthyrningAB.Controllers
             service.RemoveCarfromDb(id);
             return RedirectToAction("CarsIndex");
         }
+
+        //[HttpPost]
+        //[Route("~/AvailableCars")]
+        //public IActionResult AvailableCars([FromBody]RentPeriodData viewModel)
+        //{
+        //    CarsListOfAllVM[] x = service.CheckCarsAvailabilityDuringPeriod(viewModel);
+        //    //return RedirectToAction(nameof(AvailableCars));
+        //    //return RedirectToAction("AvailableCars", "Cars", x);
+        //    //return RedirectToAction(nameof(AvailableCars), new { CarsListOfAllVM = x});
+        //    return AvailableCars(x);
+
+
+        //}
+        //[HttpGet]
+        //[Route("~/AvailableCars")]
+        //public IActionResult AvailableCars(CarsListOfAllVM[] x)
+        //{
+
+        //    //CarsListOfAllVM[] x = service.CheckCarsAvailabilityDuringPeriod(viewModel);
+        //    return PartialView("_AvailableCars", x);
+
+        //}
     }
 }

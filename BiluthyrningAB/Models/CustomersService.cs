@@ -57,6 +57,9 @@ namespace BiluthyrningAB.Models
                 .Where(d => d.CustomerId == id)
                 .ToArray();
         }
+
+        
+
         public CustomerVM GetCustomerDetails(int id)
         {
             return context.Customers
@@ -103,6 +106,17 @@ namespace BiluthyrningAB.Models
             details.History = cHistory;
 
             return details;
+        }
+
+        internal bool IsCustomerRegistered(string ssn)
+        {
+            var dbSsn = context.Customers.Any(c => c.Ssn == ssn);
+
+            if (dbSsn == true)
+                return true;
+            else
+                return false;
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BiluthyrningAB.Models.Entities;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +12,8 @@ namespace BiluthyrningAB.Models.ViewModels
     {
         public int BookingNr { get; set; }
 
-        [StringLength(12, ErrorMessage = "PersonNR måste anges i rätt format: 195510129999 och innehålla {1} tecken.", MinimumLength = 12)]
+        [Remote("IsRegistered", "Customers", HttpMethod = "POST",ErrorMessage ="Kunden är ej registrerad vänligen skapa en ny kund")]
+        [StringLength(12, ErrorMessage ="PersonNR måste anges i rätt format: 195510129999", MinimumLength = 12)]
         public string Ssn { get; set; }
         public int CustomerId { get; set; }
         public int CarId { get; set; }
