@@ -82,11 +82,7 @@
 
 <a href="/">Home</a>
 
-<script>
-function Ghost() {
-        $("#getAvailableCars").addClass("ghost");
-    };
-</script>
+
 <script>
 
     $("#getAvailableCars").click(function () {
@@ -99,7 +95,6 @@ function Ghost() {
             type: "Post",
             data: JSON.stringify(viewModel),
             contentType: "application/json; charset=utf-8",
-            //dataType: "json", // Förväntar sig då svaret i json och inte html.
             success: function (result) {
                 Ghost();
                 $("#divResult").html(result);

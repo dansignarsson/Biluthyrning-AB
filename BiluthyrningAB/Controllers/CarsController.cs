@@ -85,7 +85,7 @@ namespace BiluthyrningAB.Controllers
 
         //[HttpPost]
         //[Route("~/AvailableCars")]
-        //public IActionResult AvailableCars([FromBody]Data viewModel)
+        //public IActionResult AvailableCars([FromBody]Data model)
         //{
         //    CarsListOfAllVM[] x = service.CheckCarsAvailability(model);
         //    //return RedirectToAction(nameof(AvailableCars));

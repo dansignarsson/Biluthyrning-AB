@@ -42,7 +42,6 @@ namespace BiluthyrningAB.Models
                 })
                 .ToArray();
         }
-
         internal OrderVM[] GetCustomerOrders(int id)
         {
 
@@ -57,8 +56,6 @@ namespace BiluthyrningAB.Models
                 .Where(d => d.CustomerId == id)
                 .ToArray();
         }
-
-        
 
         public CustomerVM GetCustomerDetails(int id)
         {
@@ -107,7 +104,6 @@ namespace BiluthyrningAB.Models
 
             return details;
         }
-
         internal bool IsCustomerRegistered(string ssn)
         {
             var dbSsn = context.Customers.Any(c => c.Ssn == ssn);
