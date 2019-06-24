@@ -1,4 +1,5 @@
-﻿using BiluthyrningAB.Models.Entities;
+﻿using BiluthyrningAB.Models.Data;
+using BiluthyrningAB.Models.Entities;
 using BiluthyrningAB.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -55,6 +56,30 @@ namespace BiluthyrningAB.Models
                 })
                 .Where(d => d.CustomerId == id)
                 .ToArray();
+        }
+
+        internal CustomerDetailsData GetCustomerData(string ssn)
+        {
+            CustomerDetailsData x = context.Customers
+                .Where(c => c.Ssn == ssn)
+                .Select(c => new CustomerDetailsData
+                {
+                    CustomerId = c.CustomerId,
+                    FirstName = c.FirstName,
+                    LastName = c.LastName,
+                    Ssn = c.Ssn,
+                    Success = true
+                }).SingleOrDefault();
+
+            if (x == null)
+            {
+                CustomerDetailsData y = new CustomerDetailsData
+                {
+                    Success = false
+                };
+                return y;
+            }
+            return x;
         }
 
         public CustomerVM GetCustomerDetails(int id)

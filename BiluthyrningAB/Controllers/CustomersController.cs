@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BiluthyrningAB.Models;
+using BiluthyrningAB.Models.Data;
 using BiluthyrningAB.Models.Entities;
 using BiluthyrningAB.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -54,14 +55,12 @@ namespace BiluthyrningAB.Controllers
         }
 
         [HttpPost]
-        public JsonResult IsRegistered(string userData)
-        {
-            var dbSsn = db.Customers.Where(c => c.Ssn == userData).SingleOrDefault();
+        [Route("/GetCustomer")]
+        public IActionResult GetCustomer([FromBody]CustomerSsnData dataModel)
+        { 
+            CustomerDetailsData x = service.GetCustomerData(dataModel.Ssn);
 
-            if (dbSsn != null)
-                return Json(1);
-            else
-                return Json(0);
+            return Json(x);
         }
     }
 }
