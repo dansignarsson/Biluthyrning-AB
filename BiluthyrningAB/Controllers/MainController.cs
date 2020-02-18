@@ -10,8 +10,8 @@ namespace BiluthyrningAB.Controllers
 {
     public class MainController : Controller
     {
-
         MainService service;
+
         public MainController(MainService service)
         {
             this.service = service;
@@ -27,7 +27,7 @@ namespace BiluthyrningAB.Controllers
         [Route("/Booking/")]
         public IActionResult Booking()
         {
-            return View(service.ListAvailableCarsForBooking());
+            return View();
         }
 
         [HttpPost]
@@ -36,7 +36,6 @@ namespace BiluthyrningAB.Controllers
         {
             if (!ModelState.IsValid)
                 return View();
-
 
             service.BookCar(order);
             return RedirectToAction(nameof(Index));
@@ -57,10 +56,6 @@ namespace BiluthyrningAB.Controllers
         [Route("/ConfirmReturn/")]
         public IActionResult ConfirmReturn(OrderVM carToReturn)
         {
-            if (!ModelState.IsValid)
-                return View(nameof(Return));
-
-
             service.CarToReturn(carToReturn);
             return RedirectToAction("ReturnConfirmationReciept", new { id = carToReturn.BookingNr });
         }

@@ -14,13 +14,10 @@ namespace BiluthyrningAB.Controllers
     {
         CustomersService service;
 
-        MercuryContext db = new MercuryContext();
-
         public CustomersController(CustomersService service)
         {
             this.service = service;
         }
-
 
         [HttpGet]
         [Route("/CustomersPage/")]
@@ -57,9 +54,8 @@ namespace BiluthyrningAB.Controllers
         [HttpPost]
         [Route("/GetCustomer")]
         public IActionResult GetCustomer([FromBody]CustomerSsnData dataModel)
-        { 
+        {
             CustomerDetailsData x = service.GetCustomerData(dataModel.Ssn);
-
             return Json(x);
         }
     }

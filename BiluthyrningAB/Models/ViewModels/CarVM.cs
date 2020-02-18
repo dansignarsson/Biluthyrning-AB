@@ -19,6 +19,7 @@ namespace BiluthyrningAB.Models.ViewModels
         public bool ToBeCleaned { get; set; }
         public bool ToBeRemoved { get; set; }
         public bool NeedService { get; set; }
+        public bool Success { get; set; }
         public HistoryLogVM[] History { get; set; }
     }
 }

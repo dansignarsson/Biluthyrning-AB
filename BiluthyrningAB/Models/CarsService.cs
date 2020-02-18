@@ -1,5 +1,7 @@
-﻿using BiluthyrningAB.Models.Entities;
+﻿using BiluthyrningAB.Models.Data;
+using BiluthyrningAB.Models.Entities;
 using BiluthyrningAB.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,6 +94,7 @@ namespace BiluthyrningAB.Models
             context.SaveChanges();
         }
 
+
         internal void UpdateCarCleaning(CarVM update)
         {
             var carToUpdate = context.Cars.First(c => c.Id == update.Id);
@@ -134,6 +137,18 @@ namespace BiluthyrningAB.Models
             context.Cars.Remove(carToDelete);
             context.SaveChanges();
 
+        }
+        internal CarVM[] GetAvailableCars(AvailableCarsData dataModel)
+        {
+            return context.Cars
+            .Where(x => (x.Orders.All(o => !((dataModel.PickUpDate >= o.PickUpDate && dataModel.PickUpDate <= o.ReturnDate && o.IsActive) || (dataModel.ReturnDate >= o.PickUpDate && dataModel.ReturnDate <= o.ReturnDate && o.IsActive)))))
+            .Select(x => new CarVM
+            {
+                Id = x.Id,
+                RegNr = x.RegNr,
+                CarType = x.CarType,
+            })
+            .ToArray();
         }
 
     }

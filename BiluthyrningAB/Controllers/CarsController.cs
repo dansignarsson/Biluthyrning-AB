@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BiluthyrningAB.Models;
+using BiluthyrningAB.Models.Data;
 using BiluthyrningAB.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,11 +13,10 @@ namespace BiluthyrningAB.Controllers
     {
         CarsService service;
 
-        public CarsController( CarsService service)
+        public CarsController(CarsService service)
         {
             this.service = service;
         }
-
 
         [HttpGet]
         [Route("/CarsIndex/")]
@@ -83,26 +83,15 @@ namespace BiluthyrningAB.Controllers
             return RedirectToAction("CarsIndex");
         }
 
-        //[HttpPost]
-        //[Route("~/AvailableCars")]
-        //public IActionResult AvailableCars([FromBody]Data model)
-        //{
-        //    CarsListOfAllVM[] x = service.CheckCarsAvailability(model);
-        //    //return RedirectToAction(nameof(AvailableCars));
-        //    //return RedirectToAction("AvailableCars", "Cars", x);
-        //    //return RedirectToAction(nameof(AvailableCars), new { CarsListAllVM = x});
-        //    return AvailableCars(x);
+        [HttpPost]
+        [Route("/CheckAvailability/")]
 
+        public IActionResult CheckAvailability([FromBody]AvailableCarsData dataModel)
+        {
+            CarVM[] x = service.GetAvailableCars(dataModel);
 
-        //}
-        //[HttpGet]
-        //[Route("~/AvailableCars")]
-        //public IActionResult AvailableCars(CarsListAllVM[] x)
-        //{
+            return Json(x);
+        }
 
-        //    //CarsListAllVM[] x = service.CheckCarsAvailability(model);
-        //    return PartialView("_AvailableCars", x);
-
-        //}
     }
 }

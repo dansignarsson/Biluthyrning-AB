@@ -4,170 +4,140 @@
 }
 
 
+    <style>
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: white;
+        }
+
+            .flex-container > div {
+            }
+    </style>
+
 <h1>Fyll i bokningsinformationen</h1>
 
+<div class="flex-container">
+    <div>
+        <form asp-controller="Main" asp-action="Booking" method="post">
 
-<label asp-for="Ssn" id="ssn">Personnummer</label>
-<input asp-for="Ssn" class="form-control" id="ssnInput">
-<span asp-validation-for="Ssn" class="text-danger" id="ssnVal"></span>
+            <label asp-for="Ssn" id="ssn">Personnummer</label>
+            <input asp-for="Ssn" class="form-control" id="ssnInput">
+            <span asp-validation-for="Ssn" class="text-danger" id="ssnVal"></span>
 
-<button id="getCustomer">Hämta kundinfo</button>
+            <div id="status"></div>
 
-<div id="status"></div>
+            <a href="/CreateNewCustomer" type="button">Lägg till ny kund</a>
+            <br />
 
-<a href="/CreateNewCustomer" type="button">Lägg till ny kund</a>
-<br />
+            <label asp-for="PickUpDate">Datum och tid för upphämtning</label>
+            <input asp-for="PickUpDate" type="datetime-local" asp-format="{0:dd/MM/yyyy 00:00}" value="2020-02-12T00:00" class="form-control" id="PickUpDate" />
+            <span asp-validation-for="PickUpDate" class="text-danger"></span>
 
-<label asp-for="PickUpDate">Datum och tid för upphämtning</label>
-<input asp-for="PickUpDate" type="datetime-local" asp-format="{0:dd/MM/yyyy 00:00}" class="form-control" id="PickUpDate" />
-<span asp-validation-for="PickUpDate" class="text-danger"></span>
+            <label asp-for="ReturnDate">Datum och tid för återlämning</label>
+            <input asp-for="ReturnDate" type="datetime-local" asp-format="{0:dd/MM/yyyy 00:00}" value="2020-02-12T00:00" class="form-control" id="ReturnDate" />
+            <span asp-validation-for="ReturnDate" class="text-danger"></span>
 
-<label asp-for="ReturnDate">Datum och tid för återlämning</label>
-<input asp-for="ReturnDate" type="datetime-local" asp-format="{0:dd/MM/yyyy 00:00}" class="form-control" id="ReturnDate" />
-<span asp-validation-for="ReturnDate" class="text-danger"></span>
+            <br />
+            <select asp-for="CarId" id="availableCars" class="form-control"></select>
+            <div id="noAvailableCars"></div>
+
+            <br />
+
+            <button type="submit">Boka!</button>
+
+        </form>
+
+        <a href="/">Home</a>
+    </div>
 
 
-<button id="click">Visa tillgängliga bilar</button>
+    <div>
+        <br />
 
-<div id="divResult"></div>
+        <button id="getCustomer">Hämta kundinfo</button>
+        <br />
+        <br />
+        <br />
+        <br />
+
+        <button id="getAvailableCars">Visa tillgängliga bilar</button>
+
+    </div>
+
+</div>
 
 
-<a href="/">Home</a>
+
 
 @section scripts
 {
 
 
     <script>
-            
-                $("#getCustomer").click(function () {
-                    var ssn = $("#ssnInput").val();
-                    var dataModel = { ssn: ssn };
-                    console.log(ssn);
-                    request = $.ajax({
-                        url: "/GetCustomer",
-                        type: "Post",
-                        data: JSON.stringify(dataModel),
-                        contentType: "application/json; charset=utf-8",
-                        success: function (result) {
-                            if (result.success) {
-                                $("#status").html(result.customerId + result.firstName + result.lastName + result.ssn)
 
-                                console.log(result.customerId + result.firstName, result.lastName, result.ssn);
-                            }
-                            else if (result.success == false) {
-                                $("#status").html("Kunden finns ej vänligen registrera nedan.")
-                            }
-                        }
-                    });
+        $("#getCustomer").click(function () {
+            var ssn = $("#ssnInput").val();
+            var dataModel = { ssn: ssn };
+            console.log(ssn);
 
-
-                });
-
-        </script>
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<script>
-
-        $("#getAvailableCars").click(function () {
-            var PickUpDate = $("#PickUpDate").val();
-            var ReturnDate = $("#ReturnDate").val();
-            console.log(RentalDate);
-            var viewModel = { PickUpDate: PickUpDate, ReturnDate: ReturnDate };
             request = $.ajax({
-                url: "/AvailableCars",
+                url: "/GetCustomer",
                 type: "Post",
-                data: JSON.stringify(viewModel),
+                data: JSON.stringify(dataModel),
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
-                    Ghost();
-                    $("#divResult").html(result);
+                    if (result.success) {
+                        $("#status").html(result.customerId + result.firstName + result.lastName + result.ssn)
+
+                        console.log(result.customerId + result.firstName, result.lastName, result.ssn);
+                    }
+                    else if (result.success == false) {
+                        $("#status").html("Kunden finns ej vänligen registrera nedan.")
+                    }
                 }
             });
 
 
         });
-    </script>*@
 
+        $("#getAvailableCars").click(function () {
+            var pickUpDate = $("#PickUpDate").val();
+            var returnDate = $("#ReturnDate").val();
+            var dataModelX = { pickUpDate: pickUpDate, returnDate: returnDate };
 
+            console.log(dataModelX);
+            console.log(pickUpDate);
+            console.log(returnDate);
 
+            request = $.ajax({
+                url: "/CheckAvailability",
+                type: "Post",
+                data: JSON.stringify(dataModelX),
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    
+                    var html = ""
 
-
-
-
-@*<script>
-        function SsnCheck() {
-            $("#status").html("checking...")
-            $.post("@Url.Action("IsRegistered", "Customers")",
-                {
-
-                    userData: $("#ssnInput").val()
-                },
-                function (data) {
-                    if (data == 0) {
-                        $("#status").html('true');
+                    for (var i = 0; i < result.length; i++) {
+                        html += "<option value=" + result[i].id + ">" + result[i].id + " " + result[i].regNr + " " + result[i].carType + "</option>" + "</br>"
                     }
-                    else {
-                        $("#status").html('false');
-                    }
-                });
 
-            }
-    </script>*@
+                    $("#availableCars").html(html)
 
 
+                }
+            });
+        });
 
 
-@*<form asp-controller="Main" asp-action="Booking" method="post">
-
-        <label asp-for="Ssn">Personnummer</label>
-        <input asp-for="Ssn" class="form-control" id="ssnBooking">
-        <span asp-validation-for="Ssn" class="text-danger" id=""></span>
 
 
-        <label asp-for="PickUpDate">Datum och tid för upphämtning</label>
-        <input asp-for="PickUpDate" type="datetime-local" asp-format="{0:dd/MM/yyyy 00:00}" class="form-control" id="bookPUD" />
-        <span asp-validation-for="PickUpDate" class="text-danger"></span>
-
-        <label asp-for="ReturnDate">Datum och tid för upphämtning</label>
-        <input asp-for="ReturnDate" type="datetime-local" asp-format="{0:dd/MM/yyyy 00:00}" class="form-control" id="bookRD" />
-        <span asp-validation-for="ReturnDate" class="text-danger"></span>
 
 
-        <label asp-for="CarId">Välj bil</label>
-        <select asp-for="CarId" class="form-control">
 
-            @foreach (var c in @Model.Cars)
-            {
-                <option value="@c.Id">@c.CarType @c.RegNr</option>
-            }
+    </script>
+}
 
-        </select>
 
-        <input asp-for="IsReturned" type="hidden" value="false" class="form-control" />
-        <br />
-        <button type="submit">Boka</button>
 
-    </form>*@

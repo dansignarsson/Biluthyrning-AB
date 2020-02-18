@@ -23,13 +23,14 @@ namespace BiluthyrningAB.Models.ViewModels
         public string RegNr { get; set; }
 
         [Range(typeof(DateTime), "1/5/2019", "1/1/2021", ErrorMessage = "Välj ett giltigt bokningsdatum 1/5/2019 - 1/1/2021")]
-        public DateTime? PickUpDate { get; set; }
+        public DateTime PickUpDate { get; set; }
 
         public DateTime ReturnDate { get; set; }
         public int CurrentMileage { get; set; }
         public int MileageOnReturn { get; set; }
         public int DrivenMiles { get; set; }
         public bool IsReturned { get; set; }
+        public bool IsActive { get; set; }
 
         public CustomerVM[] Customers { get; set; }
         public Customers Customer { get; set; }

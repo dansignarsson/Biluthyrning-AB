@@ -7,6 +7,8 @@
 <p>Registreringsnummer: @Model.RegNr</p>
 <p>Bilmodell: @Model.CarType</p>
 <p>Datum för upphämtning: @Model.PickUpDate</p>
+<p>Datum för återlämning: @Model.ReturnDate</p>
+
 <p>Mätarställning vid uthyrning: @Model.CurrentMileage</p>
 
 <form asp-controller="Main" asp-action="ConfirmReturn" method="post">
@@ -16,7 +18,7 @@
     <span asp-validation-for="MileageOnReturn" class="text-danger"></span>
 
     <input asp-for="BookingNr" type="hidden" value="@Model.BookingNr" class="form-control" />
-    <input asp-for="IsReturned" type="hidden" value="true" class="form-control" />
+    <input asp-for="CarId" type="hidden" value="@Model.CarId" class="form-control" />
 
     <button type="submit">Bekräfta återlämning</button>
 </form>
