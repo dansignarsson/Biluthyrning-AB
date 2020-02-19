@@ -11,7 +11,6 @@ namespace BiluthyrningAB.Models.Data
         public int Id { get; set; }
         public DateTime PickUpDate { get; set; }
         public DateTime ReturnDate { get; set; }
-        public bool Success { get; set; }
         public string RegNr { get; internal set; }
         public string CarType { get; internal set; }
         public CarVM[] AvailableCars { get; set; }

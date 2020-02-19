@@ -21,16 +21,17 @@ namespace BiluthyrningAB.Models
 
         internal void AddCarToDb(CarVM carToAdd)
         {
-            Cars c = new Cars();
-
-            c.RegNr = carToAdd.RegNr;
-            c.CarType = carToAdd.CarType;
-            c.Mileage = carToAdd.Mileage;
-            c.IsAvailable = true;
-            c.TimesRented = 0;
-            c.ToBeCleaned = false;
-            c.ToBeRemoved = false;
-            c.NeedService = false;
+            Cars c = new Cars
+            {
+                RegNr = carToAdd.RegNr,
+                CarType = carToAdd.CarType,
+                Mileage = carToAdd.Mileage,
+                IsAvailable = true,
+                TimesRented = 0,
+                ToBeCleaned = false,
+                ToBeRemoved = false,
+                NeedService = false
+            };
 
             context.Cars.Add(c);
             context.SaveChanges();

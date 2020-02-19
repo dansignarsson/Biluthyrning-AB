@@ -1,38 +1,40 @@
 ﻿@{
     ViewData["Title"] = "BiluthyrningAB";
 }
-    <html>
-
-
-    <head>
+   
         <style>
             .flex-container {
                 display: flex;
                 flex-wrap: wrap;
-                background-color: black;
+                background-color: white;
+                margin: 5%;
+                justify-content: center;
             }
 
                 .flex-container > div {
-                    background-color: #f1f1f1;
-                    width: 100px;
+                    background-color: lightblue;
+                    width: 300px;
                     margin: 10px;
                     text-align: center;
-                    line-height: 75px;
+                    line-height: 300px;
                     font-size: 30px;
+                    position: center;
+                    border-radius: 10px
                 }
-
+                
             .h1 {
                 text-align: center;
             }
         </style>
-    </head>
-    <body>
+    
 
 
 
+       <div class="h1">
         <h1>Välkommen till Biluthyrning AB</h1>
+       </div> 
 
-        <div id="flex-container">
+        <div class="flex-container">
 
             <div>
                 <a asp-controller="Cars" asp-action="CarsIndex">Hantera Bilar</a>
@@ -55,6 +57,3 @@
             </div>
 
         </div>
-
-    </body>
-    </html>

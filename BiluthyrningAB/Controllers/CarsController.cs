@@ -11,7 +11,7 @@ namespace BiluthyrningAB.Controllers
 {
     public class CarsController : Controller
     {
-        CarsService service;
+        readonly CarsService service;
 
         public CarsController(CarsService service)
         {

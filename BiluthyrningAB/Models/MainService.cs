@@ -151,22 +151,23 @@ namespace BiluthyrningAB.Models
                 totalPrice = diffResult.TotalDays * (baseDayRental * 1.7) + (order.DrivenMiles * kmPrice * 1.5);
 
 
-            RecieptVM reciept = new RecieptVM();
-
-            reciept.BookingNr = order.BookingNr;
-            reciept.CarType = car.CarType;
-            reciept.RegNr = car.RegNr;
-            reciept.PickUpDate = (DateTime)order.PickUpDate;
-            reciept.ReturnDate = order.ReturnDate;
-            reciept.MileageOnPickup = order.CurrentMileage;
-            reciept.MileageOnReturn = order.MileageOnReturn;
-            reciept.DrivenMiles = order.DrivenMiles;
-            reciept.DaysRented = diffResult.Days;
-            reciept.TotalPrice = totalPrice;
-            reciept.CustomerId = customer.CustomerId;
-            reciept.Ssn = customer.Ssn;
-            reciept.FirstName = customer.FirstName;
-            reciept.LastName = customer.LastName;
+            RecieptVM reciept = new RecieptVM
+            {
+                BookingNr = order.BookingNr,
+                CarType = car.CarType,
+                RegNr = car.RegNr,
+                PickUpDate = (DateTime)order.PickUpDate,
+                ReturnDate = order.ReturnDate,
+                MileageOnPickup = order.CurrentMileage,
+                MileageOnReturn = order.MileageOnReturn,
+                DrivenMiles = order.DrivenMiles,
+                DaysRented = diffResult.Days,
+                TotalPrice = totalPrice,
+                CustomerId = customer.CustomerId,
+                Ssn = customer.Ssn,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName
+            };
 
             return reciept;
 

@@ -10,7 +10,7 @@ namespace BiluthyrningAB.Controllers
 {
     public class MainController : Controller
     {
-        MainService service;
+        readonly MainService service;
 
         public MainController(MainService service)
         {

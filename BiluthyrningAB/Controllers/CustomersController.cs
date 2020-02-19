@@ -12,7 +12,7 @@ namespace BiluthyrningAB.Controllers
 {
     public class CustomersController : Controller
     {
-        CustomersService service;
+        readonly CustomersService service;
 
         public CustomersController(CustomersService service)
         {

@@ -97,8 +97,6 @@
                     }
                 }
             });
-
-
         });
 
         $("#getAvailableCars").click(function () {
@@ -106,34 +104,28 @@
             var returnDate = $("#ReturnDate").val();
             var dataModelX = { pickUpDate: pickUpDate, returnDate: returnDate };
 
-            console.log(dataModelX);
-            console.log(pickUpDate);
-            console.log(returnDate);
-
             request = $.ajax({
                 url: "/CheckAvailability",
                 type: "Post",
                 data: JSON.stringify(dataModelX),
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
-                    
+
                     var html = ""
 
-                    for (var i = 0; i < result.length; i++) {
-                        html += "<option value=" + result[i].id + ">" + result[i].id + " " + result[i].regNr + " " + result[i].carType + "</option>" + "</br>"
+                    if (result.length > 0) {
+
+                        for (var i = 0; i < result.length; i++) {
+                            html += "<option value=" + result[i].id + ">" + result[i].id + " " + result[i].regNr + " " + result[i].carType + "</option>" + "</br>"
+                        }
+                        $("#availableCars").html(html)
                     }
-
-                    $("#availableCars").html(html)
-
-
+                    else
+                        $("#noAvailableCars").html("Inga lediga bilar de angivna datumen.")
+                    
                 }
             });
         });
-
-
-
-
-
 
 
     </script>
