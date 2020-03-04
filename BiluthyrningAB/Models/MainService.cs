@@ -140,6 +140,13 @@ namespace BiluthyrningAB.Models
 
             TimeSpan diffResult = order.ReturnDate.Subtract((DateTime)order.PickUpDate);
 
+            customer.TimesRented += 1;
+            customer.MilesDriven += order.DrivenMiles;
+            context.SaveChanges();
+
+            if(customer.Vipstatus != 3)
+            UpdateVipStatus(customer);
+
 
             if (car.CarType == "Small car")
                 totalPrice = diffResult.TotalDays * baseDayRental;
@@ -149,6 +156,7 @@ namespace BiluthyrningAB.Models
 
             else
                 totalPrice = diffResult.TotalDays * (baseDayRental * 1.7) + (order.DrivenMiles * kmPrice * 1.5);
+
 
 
             RecieptVM reciept = new RecieptVM
@@ -173,13 +181,55 @@ namespace BiluthyrningAB.Models
 
         }
 
+        private void UpdateVipStatus(Customers customer)
+        {
+            if (customer.TimesRented == 3)
+            {
+                customer.Vipstatus += 1;
+
+                HistoryLog y = new HistoryLog
+                {
+                    CustomerId = customer.CustomerId,
+                    Activity = $"Kund {customer.CustomerId} uppgraderas till VIP nivå Brons"
+                };
+                context.HistoryLog.Add(y);
+                context.SaveChanges();
+            }
+
+            if (customer.TimesRented == 5)
+            {
+                customer.Vipstatus += 1;
+                HistoryLog y = new HistoryLog
+                {
+                    CustomerId = customer.CustomerId,
+                    Activity = $"Kund {customer.CustomerId} uppgraderas till VIP nivå Silver"
+                };
+                context.HistoryLog.Add(y);
+                context.SaveChanges();
+            }
+
+            if (customer.TimesRented > 4 && customer.MilesDriven > 1000)
+            {
+                customer.Vipstatus += 1;
+                HistoryLog y = new HistoryLog
+                {
+                    CustomerId = customer.CustomerId,
+                    Activity = $"Kund {customer.CustomerId} uppgraderas till VIP nivå Guld"
+                };
+                context.HistoryLog.Add(y);
+                context.SaveChanges();
+            }
+
+        }
+
         internal HistoryLogVM[] GetAllHistory()
         {
             return context.HistoryLog
                 .Select(h => new HistoryLogVM
                 {
                     Activity = h.Activity,
-                }).ToArray();
+                })
+                .ToArray();
         }
 
     }

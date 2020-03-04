@@ -19,6 +19,10 @@ namespace BiluthyrningAB.Models.ViewModels
         [StringLength(12, ErrorMessage = "PersonNR måste anges i rätt format: 195510129999 och innehålla {1} tecken.", MinimumLength = 12)]
         public string Ssn { get; set; }
 
+        public int Vipstatus { get; set; }
+        public int TimesRented { get; set; }
+        public int MilesDriven { get; set; }
+
         public OrderVM[] CustomerOrders { get; set; }
     }
 }

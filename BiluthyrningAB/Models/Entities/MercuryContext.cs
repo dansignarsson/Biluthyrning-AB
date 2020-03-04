@@ -54,6 +54,8 @@ namespace BiluthyrningAB.Models.Entities
                     .HasColumnName("SSN")
                     .HasMaxLength(12)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Vipstatus).HasColumnName("VIPstatus");
             });
 
             modelBuilder.Entity<HistoryLog>(entity =>

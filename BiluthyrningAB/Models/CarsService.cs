@@ -123,7 +123,7 @@ namespace BiluthyrningAB.Models
 
             foreach (var order in updateOrders)
             {
-                order.CarId = null;
+                order.CarId = 0;
                 context.SaveChanges();
             }
 

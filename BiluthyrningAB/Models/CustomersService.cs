@@ -25,6 +25,9 @@ namespace BiluthyrningAB.Models
             x.Ssn = newCustomer.Ssn;
             x.FirstName = newCustomer.FirstName;
             x.LastName = newCustomer.LastName;
+            x.Vipstatus = 0;
+            x.TimesRented = 0;
+            x.MilesDriven = 0;
 
             context.Customers.Add(x);
             context.SaveChanges();
@@ -40,6 +43,8 @@ namespace BiluthyrningAB.Models
                     Ssn = c.Ssn,
                     FirstName = c.FirstName,
                     LastName = c.LastName,
+                    Vipstatus = c.Vipstatus,
+                    
                 })
                 .ToArray();
         }
@@ -91,7 +96,8 @@ namespace BiluthyrningAB.Models
                     CustomerId = c.CustomerId,
                     FirstName = c.FirstName,
                     LastName = c.LastName,
-                    Ssn = c.Ssn
+                    Ssn = c.Ssn,
+                    Vipstatus = c.Vipstatus,
                 })
                 .Single();
         }

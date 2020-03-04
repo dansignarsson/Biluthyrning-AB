@@ -12,7 +12,7 @@ namespace BiluthyrningAB.Models.Entities
 
         public int BookingNr { get; set; }
         public int CustomerId { get; set; }
-        public int? CarId { get; set; }
+        public int CarId { get; set; }
         public DateTime BookingDate { get; set; }
         public DateTime PickUpDate { get; set; }
         public DateTime ReturnDate { get; set; }
