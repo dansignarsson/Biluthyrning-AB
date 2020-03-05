@@ -12,7 +12,7 @@ namespace BiluthyrningAB.Models.ViewModels
         public string RegNr { get; set; }
         public DateTime PickUpDate { get; set; }
         public DateTime ReturnDate { get; set; }
-        public int DaysRented { get; set; }
+        public double DaysRented { get; set; }
         public int MileageOnPickup { get; set; }
         public int MileageOnReturn { get; set; }
         public int DrivenMiles { get; set; }

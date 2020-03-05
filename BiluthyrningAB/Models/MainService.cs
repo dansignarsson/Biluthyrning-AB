@@ -130,33 +130,59 @@ namespace BiluthyrningAB.Models
 
         public RecieptVM CreateReciept(int id)
         {
-            int baseDayRental = 400;
-            int kmPrice = 5;
-            double totalPrice = 0;
-
             var order = context.Orders.First(o => o.BookingNr == id);
             var car = context.Cars.First(c => c.Id == order.CarId);
             var customer = context.Customers.First(k => k.CustomerId == order.CustomerId);
 
-            TimeSpan diffResult = order.ReturnDate.Subtract((DateTime)order.PickUpDate);
+            int baseDayRental = 400;
+            int kmPrice = 5;
+            double totalPrice = 0;
+            int drivenMiles = order.DrivenMiles;
+            double totalDays = (order.ReturnDate.Date - order.PickUpDate.Date).TotalDays;
+            string carType = car.CarType; 
 
             customer.TimesRented += 1;
             customer.MilesDriven += order.DrivenMiles;
             context.SaveChanges();
 
+
             if(customer.Vipstatus != 3)
             UpdateVipStatus(customer);
 
+            int vipLevel = CheckVipStatus(customer);
 
-            if (car.CarType == "Small car")
-                totalPrice = diffResult.TotalDays * baseDayRental;
 
-            else if (car.CarType == "Van")
-                totalPrice = diffResult.TotalDays * (baseDayRental * 1.2) + (order.DrivenMiles * kmPrice);
+            if (vipLevel > 0)
+                baseDayRental /= 2;
 
-            else
-                totalPrice = diffResult.TotalDays * (baseDayRental * 1.7) + (order.DrivenMiles * kmPrice * 1.5);
+            if (vipLevel > 1 && totalDays == 3)
+                totalDays = 2;
 
+            if (vipLevel > 1 && totalDays >= 4)
+                totalDays -= 2;
+
+
+            if (vipLevel > 2 && drivenMiles > 20)
+                drivenMiles -= 20;
+
+
+            switch (carType)
+            {
+                case "Small Car":
+                    totalPrice = totalDays * baseDayRental;
+                    break;
+
+                case "Minibus":
+                    totalPrice = totalDays * (baseDayRental * 1.2) + (order.DrivenMiles * kmPrice);
+                    break;
+
+                case "Van":
+                    totalPrice = totalDays * (baseDayRental * 1.7) + (order.DrivenMiles * kmPrice * 1.5);
+                    break;
+
+                default:
+                    break;
+            }
 
 
             RecieptVM reciept = new RecieptVM
@@ -169,7 +195,7 @@ namespace BiluthyrningAB.Models
                 MileageOnPickup = order.CurrentMileage,
                 MileageOnReturn = order.MileageOnReturn,
                 DrivenMiles = order.DrivenMiles,
-                DaysRented = diffResult.Days,
+                DaysRented = totalDays,
                 TotalPrice = totalPrice,
                 CustomerId = customer.CustomerId,
                 Ssn = customer.Ssn,
@@ -181,8 +207,14 @@ namespace BiluthyrningAB.Models
 
         }
 
+        public int CheckVipStatus(Customers customer)
+        {
+            return customer.Vipstatus;
+        }
+
         private void UpdateVipStatus(Customers customer)
         {
+
             if (customer.TimesRented == 3)
             {
                 customer.Vipstatus += 1;
